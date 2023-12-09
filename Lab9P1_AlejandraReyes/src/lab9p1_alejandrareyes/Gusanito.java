@@ -19,6 +19,7 @@ public class Gusanito {
     static char [][] tablero; 
     private int indact = 0;
     static ArrayList <char[][]> tableros = new ArrayList<>();
+    
     static ArrayList <String> instrucciones;
     
     public int getFilmanzana() {
@@ -107,7 +108,7 @@ public class Gusanito {
                 if (num==1){
                     
                         String opcion = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) +"\n Ingrese la instruccion de la forma magnitudDIRECCION (ej. 2UP)");
-
+                        
                         int finalnum = 0;
                         for (int i=0; i<opcion.length(); i++){
                             if (Character.isDigit(opcion.charAt(i))){
@@ -176,14 +177,13 @@ public class Gusanito {
                     while (num2>0 && num2<3){
                         switch (num2){
                         case 1:
-                            showPreviousState();
-                            //showNextState();
+                            
                             break;
                         case 2:
                             
                             break;
                         case 3:
-                            showSelectedState();
+                           
                             break;
                         
 
@@ -223,6 +223,10 @@ public class Gusanito {
     
     public static String mostrarPaso (int paso){
         String mensaje="";
+        tableros.indexOf(paso);
+        if(paso>instrucciones.size()){
+            
+        }
         
         
         return mensaje;
@@ -238,44 +242,8 @@ public class Gusanito {
         }
         return tablerotemp;
     }
-    private void showNextState() {
-        // Display the next state in the tableros list
-        indact++;
-        if (indact < tableros.size()) {
-            tablero = Guardatab(tableros.get(indact));
-            String ing = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) + "\n Mostrando" + indact+"\n 1. Ver siguiente paso \n 2. Ver paso anterior \n 3. Seleccionar paso \n 4. Volver al menu");
-
-        } else {
-            // Already at the latest state
-            JOptionPane.showMessageDialog(null, "No hay siguiente paso disponible");
-        }
-    }
-
-    private void showPreviousState() {
-        // Display the previous state in the tableros list
-        indact--;
-        if (indact >= 0) {
-            tablero = Guardatab(tableros.get(indact));
-            imprimeJoption(tablero);
-        } else {
-            // Already at the earliest state
-            JOptionPane.showMessageDialog(null, "No hay paso anterior disponible");
-        }
-    }
-
-    private void showSelectedState() {
-        // Display a selected state in the tableros list
-        String input = JOptionPane.showInputDialog("Ingrese el índice del paso deseado");
-        int selectedIndex = Integer.parseInt(input);
-        if (selectedIndex >= 0 && selectedIndex < tableros.size()) {
-            indact = selectedIndex;
-            tablero = Guardatab(tableros.get(indact));
-            imprimeJoption(tablero);
-        } else {
-            // Invalid index
-            JOptionPane.showMessageDialog(null, "Índice no válido");
-        }
-    }
+    
+    
     
     
 

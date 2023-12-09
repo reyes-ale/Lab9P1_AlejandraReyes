@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
 public class Gusanito {
     int filmanzana;
     int colmanzana;
-    int filgus;
-    int colgus;
+    static int filgus;
+    static int colgus;
     static char [][] tablero; 
     private int indact = 0;
     static ArrayList <char[][]> tableros = new ArrayList<>();
@@ -57,7 +57,6 @@ public class Gusanito {
     
     
     public Gusanito(int filas, int columnas){
-        
         
         Random rand = new Random ();
         tablero = new char [filas][columnas]; 
@@ -108,7 +107,7 @@ public class Gusanito {
                 if (num==1){
                     
                         String opcion = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) +"\n Ingrese la instruccion de la forma magnitudDIRECCION (ej. 2UP)");
-                        
+                     
                         int finalnum = 0;
                         for (int i=0; i<opcion.length(); i++){
                             if (Character.isDigit(opcion.charAt(i))){
@@ -145,12 +144,6 @@ public class Gusanito {
                         
                      tableros.add(Guardatab(tablero));
                      
-
-                    if (filmanzana==filgus && colmanzana==colgus){
-                        //has llegado a la manzana
-                       }
-
-
                     imprimeJoption(tablero);
                     String ing = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) + "\n Mostrando \n 1. Ver siguiente paso \n 2. Ver paso anterior \n 3. Seleccionar paso \n 4. Volver al menu");
 
@@ -174,33 +167,30 @@ public class Gusanito {
                     String ingresa2 = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) + "\n 1. Ver siguiente paso \n 2. Ver paso anterior \n 3. Seleccionar paso \n 4. Volver al menu ");
                     int num2 = Integer.parseInt(ingresa2);
                     
-                    while (num2>0 && num2<3){
-                        switch (num2){
-                        case 1:
-                            
-                            break;
-                        case 2:
-                            
-                            break;
-                        case 3:
-                           
-                            break;
-                        
+                        while (num2>0 && num2<3){
+                            switch (num2){
+                            case 1:
+                                mostrarPaso(num-1);
+                                break;
+                            case 2:
+                                mostrarPaso(num+1);
+                                break;
+                            case 3:
+                                ingresa2 = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) + "\n Ingrese el paso que desea");
+                                num = Integer.parseInt(ingresa2);
+                                mostrarPaso(num);
+                                break;
+                            }
+                        }
+
 
                     }
-                    }
-
-
-                     }
                 }
-                
-                
                 
                 
                 ingresa = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) + "\n 1. Ingresar instruccion \n 2. Ejecutar instrucciones");
                 num = Integer.parseInt(ingresa);
             }
-            
     
     }
             
@@ -224,13 +214,43 @@ public class Gusanito {
     public static String mostrarPaso (int paso){
         String mensaje="";
         tableros.indexOf(paso);
-        if(paso>instrucciones.size()){
-            
+        if(paso>tableros.size()){
+            JOptionPane.showMessageDialog(null, "Paso no valido");
+              
+        }
+        int tempfilgus = filgus;
+         int tempcolgus = colgus;
+        for (int i=0; i<tableros.size(); i++){
+            for (int j=0; j< tableros.size();j++){
+                if(tableros.indexOf(i)==tableros.indexOf(paso)){
+                    mensaje="Mostrando" + paso;
+            }
+                 if (tempfilgus < 0 || tempfilgus > tableros.size()) {
+                                int x = colgus-1;
+                                String ingresa2 = JOptionPane.showInputDialog(imprimeJoption(tablero) + "Te pasastes! x:"  + x +"\n 1. Ver siguiente paso \n 2. Ver paso anterior \n 3. Seleccionar paso \n 4. Volver al menu ");
+                                int num2 = Integer.parseInt(ingresa2);
+                                break;
+                }
+                            /*else if (tempcolgus < 0 || tempcolgus > tableros[i][j].size()){
+                                int y = filas-1;
+                                String ingresa2 = JOptionPane.showInputDialog( imprimeJoption(tablero) + "Te pasastes! y:"  + y + "\n 1. Ver siguiente paso \n 2. Ver paso anterior \n 3. Seleccionar paso \n 4. Volver al menu ");
+                         break;
+                        }*/
+                            else {
+                                filgus = tempfilgus;
+                                colgus = tempcolgus;
+                                tablero[filgus][colgus] = '§';
+                                imprimeJoption(tablero);
+                                String ing = JOptionPane.showInputDialog("Mapa \n" + imprimeJoption(tablero) + "\n Mostrando \n 1. Ver siguiente paso \n 2. Ver paso anterior \n 3. Seleccionar paso \n 4. Volver al menu");
+                            }
+            }
         }
         
         
         return mensaje;
     }
+        
+    
     //paso-1 )+1 ind
     
     private char[][] Guardatab (char[][] tablero) {
@@ -243,15 +263,6 @@ public class Gusanito {
         return tablerotemp;
     }
     
-    
-    
+    }
     
 
-    
-    
-    
-    
-    
-    
-    
-}
